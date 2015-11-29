@@ -30,4 +30,10 @@ describe do
 		plane = Plane.new
 		expect { airport.land(plane) }.not_to raise_error
 	end
+
+	it 'Instruct plane to take off and confirm it no longer in airport' do
+		airport = Airport.new
+		plane = Plane.new
+		expect { airport.take_off(plane) }.not_to raise_error
+	end
 end

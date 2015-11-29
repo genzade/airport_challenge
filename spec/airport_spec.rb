@@ -12,4 +12,7 @@ describe Airport do
 		expect(airport.land(plane)).to eq plane
 	end
 	
+	it 'Instruct plane to take off' do
+		expect(airport).to respond_to(:take_off).with(1).argument
+	end
 end
