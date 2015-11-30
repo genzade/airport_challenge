@@ -61,4 +61,14 @@ describe Airport do
 		end
 	end
 
+	context 'defualts' do
+		#subject(defualt_airport) { described_class.new() }
+
+		it 'Has a defualt capacity' do
+			defualt_airport = described_class.new()
+			allow(defualt_airport).to receive(:stormy?).and_return false
+			described_class::DEFUALT_CAPACITY.times { defualt_airport.land(plane) }
+			expect { defualt_airport.land(plane) }.to raise_error 'Cannot land plane - airport full'
+		end
+	end
 end

@@ -2,7 +2,11 @@
 
 class Airport
 
-	def initialize(capacity)
+	attr_accessor :capacity
+
+	DEFUALT_CAPACITY = 20
+
+	def initialize(capacity=DEFUALT_CAPACITY)
 		@capacity = capacity
 		@planes = []
 	end

@@ -65,4 +65,11 @@ describe 'User Stories' do
 
 	end
 
+	it 'Default capacity should have an override option' do
+		defualt_airport = Airport.new
+		allow(defualt_airport).to receive(:stormy?).and_return false
+		Airport::DEFAULT_CAPACITY.times { defualt_airport.land(plane) }
+		expect { default_airport.land(plane) }.to raise_error 'Cannot land plane - airport full'
+	end
+
 end
