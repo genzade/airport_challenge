@@ -24,16 +24,45 @@ So that the software can be used for many different airports
 I would like a default airport capacity that can be overridden as appropriate
 =end
 
-describe do 
-	it 'Instruct a plane to land at airport and confirm it has landed' do
-		airport = Airport.new
-		plane = Plane.new
-		expect { airport.land(plane) }.not_to raise_error
+describe 'User Stories' do 
+	let(:airport) { Airport.new(20)}
+	let(:plane) { Plane.new }
+
+	context 'When not stormy' do
+		before do
+			allow(airport).to receive(:stormy?).and_return false
+		end
+		it 'Instruct a plane to land at airport and confirm it has landed' do
+			expect { airport.land(plane) }.not_to raise_error
+		end
+
+		it 'Instruct plane to take off and confirm it no longer in airport' do
+			expect { airport.take_off(plane) }.not_to raise_error
+		end
+
+		context 'When airport is full' do
+			it 'Prevents landing when the full' do
+				20.times do
+					airport.land(plane)
+				end
+				expect { airport.land(plane) }.to raise_error 'Cannot land plane - airport full'
+			end
+		end
 	end
 
-	it 'Instruct plane to take off and confirm it no longer in airport' do
-		airport = Airport.new
-		plane = Plane.new
-		expect { airport.take_off(plane) }.not_to raise_error
+	context 'When weather stormy' do
+		before do
+			allow(airport).to receive(:stormy?).and_return true
+		end
+
+		it 'Prevents landing' do
+			expect { airport.land(plane) }.to raise_error 'Cannot land plane - bad weather'
+		end
+
+		it 'Prevents take off' do
+			expect { airport.take_off(plane) }.to raise_error 'Cannot take off plane - bad weather'
+		end
+
 	end
+
 end
